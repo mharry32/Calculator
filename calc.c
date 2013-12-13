@@ -11,7 +11,7 @@
 #define isdigit(c) ((c>=48 && c<=57) ? 1 : 0) 
 typedef struct token
 {
-	char token_str[20];
+	char token_str[100];
 	char token_type;
 	int precedence;
 	int assoc;
@@ -38,11 +38,17 @@ void do_op(token temp);
 
 int main()
 {
-	printf("Type your expression(no spaces):\n");
-	scanf("%s",expression);
-	get_rpn();
-	eval_rpn();
-	printf("%f\n",answer);
+	while(1)
+	{
+		printf("Type your expression(no spaces):\n");
+		scanf("%s",expression);
+		get_rpn();
+		eval_rpn();
+		printf("%f\n",answer);
+		memset(st1.tok_stack, 0, sizeof(st1.tok_stack));
+		memset(output,0,sizeof(output));
+		out_length=0;
+	}
 }
 
 
@@ -55,9 +61,9 @@ int main()
 
 
 
-void get_rpn() // takes expression as input string then puts rpn in output string
+void get_rpn()
 {
-	st1.size==-1;
+	st1.size=0;
 	int x,z;
 	token o1;
 	token o2;
@@ -320,5 +326,5 @@ void eval_rpn()
 			}
 		}
 	}
-	answer=atof((st1.tok_stack[st1.size]).token_str);
+	answer=atof(pop().token_str);
 }
