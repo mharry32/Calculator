@@ -300,6 +300,12 @@ void do_op(token temp)
 			float ans=sqrt(p1);
 			sprintf(tempo.token_str,"%f",ans);
 		}
+		else if(strcmp(temp.token_str,"neg")==0)
+		{
+			float p1=atof(pop().token_str);
+			float ans=-1*p1;
+			sprintf(tempo.token_str,"%f",ans);
+		}
 		push(tempo);
 	}
 }
