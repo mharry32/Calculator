@@ -9,6 +9,8 @@
 #define get_assoc(c) (c=='^') ? right : left
 #define isalpha(c) ( ( (c>=65 && c<=90) || (c>=97 && c<=122)   ) ? 1 : 0)
 #define isdigit(c) ((c>=48 && c<=57) ? 1 : 0) 
+#define M_PI 3.14159265358979323846 
+
 typedef struct token
 {
 	char token_str[100];
@@ -22,7 +24,7 @@ typedef struct stack
 	token tok_stack[100];
 } stack;
 stack st1;
-int get_precedence(c){ return (c=='+' || c=='-') ? 2 : (c=='/' || c=='*') ? 3 : 4;}
+int get_precedence(char c){ return (c=='+' || c=='-') ? 2 : (c=='/' || c=='*') ? 3 : 4;}
 char check_type(char c)
 { 
 return (c==42 || c==43 || c==45 || c==47 || c==94) ? 'o' : isalpha(c) ? 'c' : (isdigit(c) || c=='.') ? 'd' : (c==40 || c==41) ? 'p' : (c==44) ? 's' : 0;
@@ -154,16 +156,10 @@ void get_rpn()
 	///////////////////////////////////////////////////////////
 	if(check_type(expression[x])=='s')
 	{
-		while((st1.tok_stack[st1.size]).token_str[0]!=40 && st1.size>=0)
-		{
+		
 			if(output[out_length-1]!=' ')
 				output[out_length++]=' ';
-			output[out_length++]=pop().token_str[0];
-			if(output[out_length-1]!=' ')
-				output[out_length++]=' ';
-		}
-		if(st1.size==-1)
-			printf("Paranthesis mismatch!");
+			continue;
 	}
 	//////////////////////////////////////////////////////////
 	}
@@ -291,7 +287,8 @@ void do_op(token temp)
 		else if(strcmp(temp.token_str,"log")==0)
 		{
 			float p1=atof(pop().token_str);
-			float ans=log10(p1);
+			float p2=atof(pop().token_str);
+			float ans=(1/log(p2))*log(p1);
 			sprintf(tempo.token_str,"%f",ans);
 		}
 		else if(strcmp(temp.token_str,"sqrt")==0)
